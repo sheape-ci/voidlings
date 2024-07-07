@@ -41,10 +41,9 @@ jobs:
     steps:
       - name: Prepare container
         run: |
-          mkdir -p /etc/xbps.d && cp /usr/share/xbps.d/*-repository-*.conf /etc/xbps.d/
-          ls -la
+          mkdir -pv /etc/xbps.d && cp -v /usr/share/xbps.d/*-repository-*.conf /etc/xbps.d/
           sed -i 's|repo-default|repo-ci|g' /etc/xbps.d/*-repository-*.conf
-          xbps-install -Syu xbps
+          xbps-install -Syu xbps || xbps-install -yu xbps
           xbps-install -Syu
           xbps-install -y tar curl
 
@@ -59,9 +58,6 @@ jobs:
           cd ~/void-pkgs
           git clone https://github.com/${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}.git
           cd ${{ env.REPO_NAME }}
-          if [ -f "common/shlibs" ]; then \
-            cat common/shlibs >> ../void-packages/common/shlibs \
-          fi
           cp -r srcpkgs/* ../void-packages/srcpkgs
 
       - name: Create hostrepo and prepare masterdir
