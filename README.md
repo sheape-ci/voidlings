@@ -1,6 +1,4 @@
-[![docker Status](https://img.shields.io/github/actions/workflow/status/xdeb-org/voidlinux-repository/docker.yml?label=docker
-)](https://github.com/xdeb-org/voidlinux-repository/actions/workflows/docker.yml)
-[![Deployment Status](https://img.shields.io/github/deployments/xdeb-org/voidlinux-repository/github-pages?label=deployment)](https://github.com/xdeb-org/voidlinux-repository/actions/workflows/pages.yml)
+[![Deployment Status](https://github.com/Sheape/voidlings/actions/workflows/build-x86_64-glibc.yml/badge.svg)](https://github.com/Sheape/voidlings/actions/workflows/build-x86_64-glibc.yml)
 
 # Custom Void Linux repository
 

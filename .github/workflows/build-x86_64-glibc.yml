@@ -53,11 +53,20 @@ jobs:
           cd ~/void-pkgs
           git clone --depth 1 https://github.com/void-linux/void-packages.git
 
-      - name: Clone main repo and prepare
+      - name: Clone main repo
         run: |
           cd ~/void-pkgs
           git clone https://github.com/${{ env.REPO_OWNER }}/${{ env.REPO_NAME }}.git
+
+      - name: Copy and prepare for installation
+        run: |
+          cd ~/void-pkgs
           cd ${{ env.REPO_NAME }}
+          mkdir -p srcpkgs/brave-bin
+          cd srcpkgs/brave-bin
+          pwd
+          curl -O https://raw.githubusercontent.com/soanvig/brave-bin/master/template
+          cd ~/void-pkgs/${{ env.REPO_NAME }}
           cp -r srcpkgs/* ../void-packages/srcpkgs
 
       - name: Create hostrepo and prepare masterdir
@@ -69,6 +78,10 @@ jobs:
           common/travis/fetch-xtools.sh
 
       # Common Deps
+
+      # Maintained by soanvig: soanvig/brave-bin
+      - name: Build brave-bin
+        run: (/hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg brave-bin)
 
       # Normal Builds
       - name: Build anki-qt6
@@ -99,11 +112,25 @@ jobs:
       - name: Build qutebrowser-profile
         run: (/hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg qutebrowser-profile)
 
+      # Maintained by void linux team (void-linux/void-packages)
+      - name: Build android-studio
+        run: (/hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg android-studio)
+
+      - name: Build discord
+        run: (/hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg discord)
+
+      - name: Build msttcorefonts
+        run: (/hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg msttcorefonts)
+
+      - name: Build zoom
+        run: (/hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg zoom)
+
       # Sometimes xbps-src builds a bunch of other junk I don't want to be liable for distributing
       - name: Copy relevant packages to new directory to be packaged
         run: |
           mkdir ~/packages
           cp ~/hostdir/binpkgs/*.xbps ~/packages
+          cp ~/hostdir/binpkgs/nonfree/*.xbps ~/packages
           cd ~/packages
           xbps-rindex -a *
 
@@ -142,17 +169,27 @@ jobs:
           name: ${{ env.REPO_NAME }}
           path: ~/
 
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # We'll blow the size of the repository up very quickly if we do not delete old iterations of the repository
-      - name: Delete old repository and recreate with new packages
+      - name: Extract Artifact
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git push origin -d repository-x86_64-glibc
-          git switch --orphan repository-x86_64-glibc
           tar -xvf ~/voidlings.tar.gz -C ./
-          git add .
-          git commit -m "Upload latest packages to repository"
-          git push origin repository-x86_64-glibc
+          rm -v ~/voidlings.tar.gz
+
+      # - name: Upload to Cloudflare R2 Bucket
+      #   uses: ryand56/r2-upload-action@latest
+      #   with:
+      #     r2-account-id: ${{ secrets.R2_ACCOUNT_ID }}
+      #     r2-access-key-id: ${{ secrets.R2_ACCESS_KEY_ID }}
+      #     r2-secret-access-key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      #     r2-bucket: ${{ secrets.R2_BUCKET }}
+      #     source-dir: ./
+      #     destination-dir: ./
+
+      - name: Upload to Cloudflare R2 Bucket
+        uses: okkema/github-action-r2@v0.1.1
+        with:
+          account_id: ${{ secrets.R2_ACCOUNT_ID }}
+          r2_access_key: ${{ secrets.R2_ACCESS_KEY_ID }}
+          r2_secret_key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          r2_bucket: ${{ secrets.R2_BUCKET }}
+          source_dir: ./
+          destination_dir: ./
