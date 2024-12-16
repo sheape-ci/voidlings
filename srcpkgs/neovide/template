@@ -1,6 +1,6 @@
 # Template file for 'neovide'
 pkgname=neovide
-version=0.13.1
+version=0.13.3
 revision=1
 build_style=cargo
 hostmakedepends="fontconfig-devel freetype-devel libxkbcommon-devel"
@@ -11,4 +11,4 @@ maintainer="Sheape <sheape@dogy.app>"
 license=MIT
 homepage=https://github.com/neovide/neovide
 distfiles=${homepage}/archive/refs/tags/${version}.tar.gz
-checksum=6cc2ddf50708a343114756d424b318c581c148437b96ba9563c401dfdb754408
+checksum=21c8eaa53cf3290d2b1405c8cb2cde5f39bc14ef597b328e76f1789b0ef3539a
