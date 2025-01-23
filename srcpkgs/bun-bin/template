@@ -1,6 +1,6 @@
 # Template file for 'bun'
 pkgname=bun-bin
-version=1.0.20
+version=1.2.0
 revision=1
 build_style="meta"
 archs="aarch64 x86_64"
@@ -10,9 +10,10 @@ license="MIT"
 homepage="https://bun.sh"
 changelog="https://bun.sh/blog"
 distfiles="https://github.com/oven-sh/bun/releases/download/bun-v${version}/bun-linux-x64.zip"
-checksum=3484829701660df971c74f605a0a360a9c7f417c68ab8883718b97513d454e7f
+checksum=0747e970120b13a1da5341b751a5f0af1778bd8afd70b5c458fafff95ce9a453
+nopie=yes
 
 do_install() {
 	vbin bun
-    ln -s /usr/bin/bun /usr/bin/bunx
+    ln -sf /usr/bin/bun /usr/bin/bunx
 }
