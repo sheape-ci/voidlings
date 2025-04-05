@@ -13,8 +13,8 @@ jobs:
     name: Build Voidlings
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/void-linux/void-buildroot-${{ matrix.config.libc }}:20250214R1
-      options: --platform ${{ matrix.config.platform }}
+      image: ghcr.io/void-linux/void-${{ matrix.config.libc }}-full:20250227R1
+      options: --platform ${{ matrix.config.platform }} --privileged
       env:
         PATH: "/usr/libexec/chroot-git:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin:/usr/local/bin:/tmp/bin"
         ARCH: "${{ matrix.config.arch }}"
