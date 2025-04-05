@@ -64,42 +64,42 @@ jobs:
           common/travis/fetch-xtools.sh
       # Maintained by soanvig: soanvig/brave-bin
       - name: Build brave-bin
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg brave-bin)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg brave-bin)
       # Normal Builds
       - name: Build anki-qt6
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg anki-qt6)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg anki-qt6)
       - name: Build bat-extras
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg bat-extras)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg bat-extras)
       - name: Build bun-bin
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg bun-bin)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg bun-bin)
       # Fonts
       - name: Build font-cartograph-nonfree
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg font-cartograph-nonfree)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg font-cartograph-nonfree)
       - name: Build font-comfortaa
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg font-comfortaa)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg font-comfortaa)
       - name: Build font-lexend
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg font-lexend)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg font-lexend)
       - name: Build font-quicksand
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg font-quicksand)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg font-quicksand)
       - name: Build neovide
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg neovide)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg neovide)
       - name: Build qutebrowser-profile
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg qutebrowser-profile)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg qutebrowser-profile)
       # Maintained by void linux team (void-linux/void-packages)
       - name: Build android-studio
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg android-studio)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg android-studio)
       - name: Build discord
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg discord)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg discord)
       - name: Build msttcorefonts
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg msttcorefonts)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg msttcorefonts)
       - name: Build zoom
-        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg zoom)
+        run: (sudo -Eu builder /hostrepo/xbps-src -j$(nproc) -s pkg zoom)
       # Sometimes xbps-src builds a bunch of other junk I don't want to be liable for distributing
       - name: Copy relevant packages to new directory to be packaged
         run: |
           mkdir ~/packages
-          cp ~/hostdir/binpkgs/*.xbps ~/packages
-          cp ~/hostdir/binpkgs/nonfree/*.xbps ~/packages
+          cp /hostdir/binpkgs/*.xbps ~/packages
+          cp /hostdir/binpkgs/nonfree/*.xbps ~/packages
           cd ~/packages
           xbps-rindex -a *
       # Retrieve the signing key from the separate private repository
