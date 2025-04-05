@@ -151,6 +151,6 @@ jobs:
           account_id: ${{ secrets.R2_ACCOUNT_ID }}
           r2_access_key: ${{ secrets.R2_ACCESS_KEY_ID }}
           r2_secret_key: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          r2_bucket: ${{ secrets.R2_BUCKET }}
+          r2_bucket: $R2_BUCKET
           source_dir: ./
           destination_dir: ./
