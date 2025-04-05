@@ -33,7 +33,7 @@ jobs:
           sed -i 's|repo-default|repo-ci|g' /etc/xbps.d/*-repository-*.conf
           xbps-install -Syu xbps || xbps-install -yu xbps
           xbps-install -Syu
-          xbps-install -y tar curl
+          xbps-install -y sudo bash tar curl git
           useradd -G xbuilder -M builder
       - name: Clone Void-Packages and prepare
         run: |
@@ -61,7 +61,7 @@ jobs:
           chown -R builder:builder . &&
           sudo -Eu builder common/travis/set_mirror.sh &&
           sudo -Eu builder common/travis/prepare.sh &&
-          sudo -Eu builder common/travis/fetch-xtools.sh
+          common/travis/fetch-xtools.sh
       # Maintained by soanvig: soanvig/brave-bin
       - name: Build brave-bin
         run: (/hostrepo/xbps-src -j$(nproc) -s -H ~/hostdir pkg brave-bin)
